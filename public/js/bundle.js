@@ -22431,13 +22431,12 @@ var LeftBreast = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (LeftBreast.__proto__ || Object.getPrototypeOf(LeftBreast)).call(this, props));
 
-    ["lap", "update", "reset", "toggle"].forEach(function (method) {
+    ["update", "reset", "toggle"].forEach(function (method) {
       _this[method] = _this[method].bind(_this);
     });
 
     _this.state = _this.initialState = {
       isRunning: false,
-      lapTimes: [],
       timeElapsed: 0
     };
     return _this;
@@ -22451,15 +22450,6 @@ var LeftBreast = function (_React$Component) {
       this.setState({ isRunning: !this.state.isRunning }, function () {
         _this2.state.isRunning ? _this2.startTimer() : clearInterval(_this2.timer);
       });
-    }
-  }, {
-    key: "lap",
-    value: function lap() {
-      var _state = this.state,
-          lapTimes = _state.lapTimes,
-          timeElapsed = _state.timeElapsed;
-
-      this.setState({ lapTimes: lapTimes.concat(timeElapsed) });
     }
   }, {
     key: "reset",
@@ -22477,16 +22467,17 @@ var LeftBreast = function (_React$Component) {
     key: "update",
     value: function update() {
       var delta = Date.now() - this.startTime;
-      this.setState({ timeElapsed: this.state.timeElapsed + delta });
+      this.setState({
+        timeElapsed: this.state.timeElapsed + delta
+      });
       this.startTime = Date.now();
     }
   }, {
     key: "render",
     value: function render() {
-      var _state2 = this.state,
-          isRunning = _state2.isRunning,
-          lapTimes = _state2.lapTimes,
-          timeElapsed = _state2.timeElapsed;
+      var _state = this.state,
+          isRunning = _state.isRunning,
+          timeElapsed = _state.timeElapsed;
 
       return _react2.default.createElement(
         "div",
@@ -22504,12 +22495,11 @@ var LeftBreast = function (_React$Component) {
           "button",
           {
             type: "button",
-            onClick: isRunning ? this.lap : this.reset,
+            onClick: this.reset,
             disabled: !isRunning && !timeElapsed
           },
-          isRunning || !timeElapsed ? "Lap" : "Reset"
-        ),
-        lapTimes.length > 0 && _react2.default.createElement(LapTimes, { lapTimes: lapTimes })
+          "Reset"
+        )
       );
     }
   }]);
@@ -22557,67 +22547,6 @@ var TimeElapsed = function (_React$Component2) {
   }]);
 
   return TimeElapsed;
-}(_react2.default.Component);
-
-var LapTimes = function (_React$Component3) {
-  _inherits(LapTimes, _React$Component3);
-
-  function LapTimes() {
-    _classCallCheck(this, LapTimes);
-
-    return _possibleConstructorReturn(this, (LapTimes.__proto__ || Object.getPrototypeOf(LapTimes)).apply(this, arguments));
-  }
-
-  _createClass(LapTimes, [{
-    key: "render",
-    value: function render() {
-      var rows = this.props.lapTimes.map(function (lapTime, index) {
-        return _react2.default.createElement(
-          "tr",
-          { key: ++index },
-          _react2.default.createElement(
-            "td",
-            null,
-            index
-          ),
-          _react2.default.createElement(
-            "td",
-            null,
-            _react2.default.createElement(TimeElapsed, { timeElapsed: lapTime })
-          )
-        );
-      });
-      return _react2.default.createElement(
-        "table",
-        { id: "lap-times" },
-        _react2.default.createElement(
-          "thead",
-          null,
-          _react2.default.createElement(
-            "tr",
-            null,
-            _react2.default.createElement(
-              "th",
-              null,
-              "Lap"
-            ),
-            _react2.default.createElement(
-              "th",
-              null,
-              "Time"
-            )
-          )
-        ),
-        _react2.default.createElement(
-          "tbody",
-          null,
-          rows
-        )
-      );
-    }
-  }]);
-
-  return LapTimes;
 }(_react2.default.Component);
 
 },{"react":178}],187:[function(require,module,exports){

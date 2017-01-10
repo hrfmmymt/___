@@ -14,13 +14,12 @@ export default class LeftBreast extends React.Component {
   constructor(props) {
     super(props);
 
-    ["lap", "update", "reset", "toggle"].forEach(method => {
+    ["update", "reset", "toggle"].forEach(method => {
       this[method] = this[method].bind(this);
     });
 
     this.state = this.initialState = {
       isRunning: false,
-      lapTimes: [],
       timeElapsed: 0,
     };
   }
@@ -28,10 +27,6 @@ export default class LeftBreast extends React.Component {
     this.setState({isRunning: !this.state.isRunning}, () => {
       this.state.isRunning ? this.startTimer() : clearInterval(this.timer)
     });
-  }
-  lap() {
-    const {lapTimes, timeElapsed} = this.state;
-    this.setState({lapTimes: lapTimes.concat(timeElapsed)});
   }
   reset() {
     clearInterval(this.timer);
@@ -43,11 +38,13 @@ export default class LeftBreast extends React.Component {
   }
   update() {
     const delta = Date.now() - this.startTime;
-    this.setState({timeElapsed: this.state.timeElapsed + delta});
+    this.setState({
+      timeElapsed: this.state.timeElapsed + delta
+    });
     this.startTime = Date.now();
   }
   render() {
-    const {isRunning, lapTimes, timeElapsed} = this.state;
+    const {isRunning, timeElapsed} = this.state;
     return (
       <div>
         <TimeElapsed id="left-breast" timeElapsed={timeElapsed} />
@@ -59,12 +56,11 @@ export default class LeftBreast extends React.Component {
         </button>
         <button
           type="button"
-          onClick={isRunning ? this.lap : this.reset}
+          onClick={this.reset}
           disabled={!isRunning && !timeElapsed}
          >
-          {isRunning || !timeElapsed ? "Lap" : "Reset"}
+          Reset
         </button>
-        {lapTimes.length > 0 && <LapTimes lapTimes={lapTimes} />}
       </div>
     );
   }
@@ -93,28 +89,6 @@ class TimeElapsed extends React.Component {
           }
         />
       </div>
-    );
-  }
-}
-
-class LapTimes extends React.Component {
-  render() {
-    const rows = this.props.lapTimes.map((lapTime, index) =>
-      <tr key={++index}>
-        <td>{index}</td>
-        <td><TimeElapsed timeElapsed={lapTime} /></td>
-      </tr>
-    );
-    return (
-      <table id="lap-times">
-        <thead>
-          <tr>
-            <th>Lap</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
     );
   }
 }
