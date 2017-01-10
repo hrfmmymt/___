@@ -1,0 +1,10 @@
+<div class="container form">
+  <h2>Edit <%= @works.id %></h2>
+  <form method="post" action="/<%= @works.id %>/edit">
+    <input type="hidden" name="_method" value="PUT">
+
+    <div id="app"></div>
+
+    <input type="submit" name="" value="UPDATE" class="form__submit">
+  </form>
+</div>

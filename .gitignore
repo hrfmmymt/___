@@ -1,0 +1,4 @@
+.bundle
+db/development.db
+node_modules
+vendor/bundle

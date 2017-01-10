@@ -1,0 +1,34 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css": "postcss -c ./.postcssrc.json",
+    "watch:css": "postcss -c ./.postcssrc.json -w --map",
+    "js": "browserify -t babelify ./src/js/main.js -o ./public/js/bundle.js",
+    "watch:js": "watchify -t babelify ./src/js/main.js -o ./public/js/bundle.js",
+    "watch": "npm run watch:css & npm run watch:js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.6.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1",
+    "postcss": "^5.2.8",
+    "postcss-cli": "^2.6.0",
+    "postcss-custom-properties": "^5.0.1",
+    "postcss-nested": "^1.0.0",
+    "watchify": "^3.8.0"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "superagent": "^3.3.1"
+  }
+}

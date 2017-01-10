@@ -1,0 +1,9 @@
+{
+  "use": [
+    "autoprefixer",
+    "postcss-nested",
+    "postcss-custom-properties"
+  ],
+  "input": "./src/css/style.css",
+  "output": "./public/css/style.css"
+}
