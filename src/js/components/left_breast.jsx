@@ -3,18 +3,18 @@
 import React from "react";
 
 const leftPad = (width, n) => {
-  if ((n + '').length > width) {
+  if ((n + "").length > width) {
     return n;
   }
-  const padding = new Array(width).join('0');
-  return (padding + n).slice(-width);
+  const padding = new Array(width).join("0");
+  return (padding + n).slice(- width);
 };
 
 export default class LeftBreast extends React.Component {
   constructor(props) {
     super(props);
 
-    ["lap", "update", "reset", "toggle"].forEach((method) => {
+    ["lap", "update", "reset", "toggle"].forEach(method => {
       this[method] = this[method].bind(this);
     });
 
@@ -55,14 +55,14 @@ export default class LeftBreast extends React.Component {
           type="button"
           onClick={this.toggle}
         >
-          {isRunning ? 'Stop' : 'Start'}
+          {isRunning ? "Stop" : "Start"}
         </button>
         <button
           type="button"
           onClick={isRunning ? this.lap : this.reset}
           disabled={!isRunning && !timeElapsed}
          >
-          {isRunning || !timeElapsed ? 'Lap' : 'Reset'}
+          {isRunning || !timeElapsed ? "Lap" : "Reset"}
         </button>
         {lapTimes.length > 0 && <LapTimes lapTimes={lapTimes} />}
       </div>
@@ -84,7 +84,14 @@ class TimeElapsed extends React.Component {
     const units = this.getUnits();
     return (
       <div id={this.props.id}>
-        <input type="text" name="left_breast" readOnly value={leftPad(2, units.min) + ":" + leftPad(2, units.sec)} />
+        <input
+          type="text"
+          name="left_breast"
+          readOnly
+          value={
+            leftPad(2, units.min) + ":" + leftPad(2, units.sec)
+          }
+        />
       </div>
     );
   }
@@ -101,8 +108,10 @@ class LapTimes extends React.Component {
     return (
       <table id="lap-times">
         <thead>
-          <th>Lap</th>
-          <th>Time</th>
+          <tr>
+            <th>Lap</th>
+            <th>Time</th>
+          </tr>
         </thead>
         <tbody>{rows}</tbody>
       </table>

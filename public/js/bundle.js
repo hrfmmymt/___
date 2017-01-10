@@ -22416,10 +22416,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var leftPad = function leftPad(width, n) {
-  if ((n + '').length > width) {
+  if ((n + "").length > width) {
     return n;
   }
-  var padding = new Array(width).join('0');
+  var padding = new Array(width).join("0");
   return (padding + n).slice(-width);
 };
 
@@ -22498,7 +22498,7 @@ var LeftBreast = function (_React$Component) {
             type: "button",
             onClick: this.toggle
           },
-          isRunning ? 'Stop' : 'Start'
+          isRunning ? "Stop" : "Start"
         ),
         _react2.default.createElement(
           "button",
@@ -22507,7 +22507,7 @@ var LeftBreast = function (_React$Component) {
             onClick: isRunning ? this.lap : this.reset,
             disabled: !isRunning && !timeElapsed
           },
-          isRunning || !timeElapsed ? 'Lap' : 'Reset'
+          isRunning || !timeElapsed ? "Lap" : "Reset"
         ),
         lapTimes.length > 0 && _react2.default.createElement(LapTimes, { lapTimes: lapTimes })
       );
@@ -22546,7 +22546,12 @@ var TimeElapsed = function (_React$Component2) {
       return _react2.default.createElement(
         "div",
         { id: this.props.id },
-        _react2.default.createElement("input", { type: "text", name: "left_breast", readOnly: true, value: leftPad(2, units.min) + ":" + leftPad(2, units.sec) })
+        _react2.default.createElement("input", {
+          type: "text",
+          name: "left_breast",
+          readOnly: true,
+          value: leftPad(2, units.min) + ":" + leftPad(2, units.sec)
+        })
       );
     }
   }]);
@@ -22589,14 +22594,18 @@ var LapTimes = function (_React$Component3) {
           "thead",
           null,
           _react2.default.createElement(
-            "th",
+            "tr",
             null,
-            "Lap"
-          ),
-          _react2.default.createElement(
-            "th",
-            null,
-            "Time"
+            _react2.default.createElement(
+              "th",
+              null,
+              "Lap"
+            ),
+            _react2.default.createElement(
+              "th",
+              null,
+              "Time"
+            )
           )
         ),
         _react2.default.createElement(
