@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 
 import LeftBreast from "./components/left_breast.jsx";
 import RightBreast from "./components/right_breast.jsx";
+import BabyBottle from "./components/baby_bottle.jsx";
 import List       from "./components/list.jsx";
 
 ReactDOM.render(
@@ -12,7 +13,14 @@ ReactDOM.render(
     <LeftBreast />
     <RightBreast />
   </div>,
-  document.getElementById("app")
+  document.getElementById("breast")
+);
+
+ReactDOM.render(
+  <div>
+    <BabyBottle />
+  </div>,
+  document.getElementById("bottle")
 );
 
 ReactDOM.render(

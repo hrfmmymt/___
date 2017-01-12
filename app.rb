@@ -28,6 +28,21 @@ post "/new" do
   redirect "/"
 end
 
+post "/breast" do
+  Works.create({
+    :left_breast => params[:left_breast],
+    :right_breast => params[:right_breast]
+  })
+  redirect "/"
+end
+
+post "/bottle" do
+  Works.create({
+    :baby_bottle => params[:baby_bottle]
+  })
+  redirect "/"
+end
+
 get "/:id/edit" do
   @works = Works.find(params[:id])
   erb :edit

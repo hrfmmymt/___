@@ -38,7 +38,7 @@ export default class List extends React.Component {
               className="list"
               data-id={list.id}
             >
-              {list.id} - {list.created_at} - {list.left_breast} - {list.right_breast}
+              {list.id} - {list.created_at} - {list.left_breast} - {list.right_breast} - {list.baby_bottle}
               <DeleteButton />
               <a className="jobs__edit" href={"/" + list.id + "/edit"}>EDIT</a>
             </li>
