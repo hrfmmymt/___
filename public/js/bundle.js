@@ -22523,7 +22523,6 @@ var TimeElapsed = function (_React$Component2) {
     value: function getUnits() {
       var seconds = this.props.timeElapsed / 1000;
       return {
-        seconds: seconds.toString(),
         min: Math.floor(seconds / 60).toString(),
         sec: Math.floor(seconds % 60).toString(),
         msec: (seconds % 1).toFixed(3).substring(2)
@@ -22628,6 +22627,8 @@ var List = function (_React$Component) {
             list.created_at,
             " - ",
             list.left_breast,
+            " - ",
+            list.right_breast,
             _react2.default.createElement(_delete2.default, null),
             _react2.default.createElement(
               "a",
@@ -22648,6 +22649,160 @@ exports.default = List;
 },{"./delete.jsx":185,"react":178,"superagent":179}],188:[function(require,module,exports){
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var leftPad = function leftPad(width, n) {
+  if ((n + "").length > width) {
+    return n;
+  }
+  var padding = new Array(width).join("0");
+  return (padding + n).slice(-width);
+};
+
+var RightBreast = function (_React$Component) {
+  _inherits(RightBreast, _React$Component);
+
+  function RightBreast(props) {
+    _classCallCheck(this, RightBreast);
+
+    var _this = _possibleConstructorReturn(this, (RightBreast.__proto__ || Object.getPrototypeOf(RightBreast)).call(this, props));
+
+    ["update", "reset", "toggle"].forEach(function (method) {
+      _this[method] = _this[method].bind(_this);
+    });
+
+    _this.state = _this.initialState = {
+      isRunning: false,
+      timeElapsed: 0
+    };
+    return _this;
+  }
+
+  _createClass(RightBreast, [{
+    key: "toggle",
+    value: function toggle() {
+      var _this2 = this;
+
+      this.setState({ isRunning: !this.state.isRunning }, function () {
+        _this2.state.isRunning ? _this2.startTimer() : clearInterval(_this2.timer);
+      });
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      clearInterval(this.timer);
+      this.setState(this.initialState);
+    }
+  }, {
+    key: "startTimer",
+    value: function startTimer() {
+      this.startTime = Date.now();
+      this.timer = setInterval(this.update, 10);
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      var delta = Date.now() - this.startTime;
+      this.setState({
+        timeElapsed: this.state.timeElapsed + delta
+      });
+      this.startTime = Date.now();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _state = this.state,
+          isRunning = _state.isRunning,
+          timeElapsed = _state.timeElapsed;
+
+      return _react2.default.createElement(
+        "div",
+        null,
+        _react2.default.createElement(TimeElapsed, { id: "right-breast", timeElapsed: timeElapsed }),
+        _react2.default.createElement(
+          "button",
+          {
+            type: "button",
+            onClick: this.toggle
+          },
+          isRunning ? "Stop" : "Start"
+        ),
+        _react2.default.createElement(
+          "button",
+          {
+            type: "button",
+            onClick: this.reset,
+            disabled: !isRunning && !timeElapsed
+          },
+          "Reset"
+        )
+      );
+    }
+  }]);
+
+  return RightBreast;
+}(_react2.default.Component);
+
+exports.default = RightBreast;
+
+var TimeElapsed = function (_React$Component2) {
+  _inherits(TimeElapsed, _React$Component2);
+
+  function TimeElapsed() {
+    _classCallCheck(this, TimeElapsed);
+
+    return _possibleConstructorReturn(this, (TimeElapsed.__proto__ || Object.getPrototypeOf(TimeElapsed)).apply(this, arguments));
+  }
+
+  _createClass(TimeElapsed, [{
+    key: "getUnits",
+    value: function getUnits() {
+      var seconds = this.props.timeElapsed / 1000;
+      return {
+        min: Math.floor(seconds / 60).toString(),
+        sec: Math.floor(seconds % 60).toString(),
+        msec: (seconds % 1).toFixed(3).substring(2)
+      };
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var units = this.getUnits();
+      return _react2.default.createElement(
+        "div",
+        { id: this.props.id },
+        _react2.default.createElement("input", {
+          type: "text",
+          name: "right_breast",
+          readOnly: true,
+          value: leftPad(2, units.min) + ":" + leftPad(2, units.sec)
+        })
+      );
+    }
+  }]);
+
+  return TimeElapsed;
+}(_react2.default.Component);
+
+},{"react":178}],189:[function(require,module,exports){
+"use strict";
+
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -22660,6 +22815,10 @@ var _left_breast = require("./components/left_breast.jsx");
 
 var _left_breast2 = _interopRequireDefault(_left_breast);
 
+var _right_breast = require("./components/right_breast.jsx");
+
+var _right_breast2 = _interopRequireDefault(_right_breast);
+
 var _list = require("./components/list.jsx");
 
 var _list2 = _interopRequireDefault(_list);
@@ -22669,7 +22828,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom2.default.render(_react2.default.createElement(
   "div",
   null,
-  _react2.default.createElement(_left_breast2.default, null)
+  _react2.default.createElement(_left_breast2.default, null),
+  _react2.default.createElement(_right_breast2.default, null)
 ), document.getElementById("app"));
 
 _reactDom2.default.render(_react2.default.createElement(
@@ -22678,4 +22838,4 @@ _reactDom2.default.render(_react2.default.createElement(
   _react2.default.createElement(_list2.default, null)
 ), document.getElementById("out"));
 
-},{"./components/left_breast.jsx":186,"./components/list.jsx":187,"react":178,"react-dom":27}]},{},[188]);
+},{"./components/left_breast.jsx":186,"./components/list.jsx":187,"./components/right_breast.jsx":188,"react":178,"react-dom":27}]},{},[189]);

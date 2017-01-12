@@ -3,7 +3,8 @@
   <form method="post" action="/<%= @works.id %>/edit">
     <input type="hidden" name="_method" value="PUT">
 
-    <div id="app"></div>
+    <input type="text" name="name="left_breast" value="<%= @works.left_breast %>">
+    <input type="text" name="name="right_breast" value="<%= @works.right_breast %>">
 
     <input type="submit" name="" value="UPDATE" class="form__submit">
   </form>

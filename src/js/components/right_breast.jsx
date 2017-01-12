@@ -10,7 +10,7 @@ const leftPad = (width, n) => {
   return (padding + n).slice(- width);
 };
 
-export default class LeftBreast extends React.Component {
+export default class RightBreast extends React.Component {
   constructor(props) {
     super(props);
 
@@ -47,7 +47,7 @@ export default class LeftBreast extends React.Component {
     const {isRunning, timeElapsed} = this.state;
     return (
       <div>
-        <TimeElapsed id="left-breast" timeElapsed={timeElapsed} />
+        <TimeElapsed id="right-breast" timeElapsed={timeElapsed} />
         <button
           type="button"
           onClick={this.toggle}
@@ -81,7 +81,7 @@ class TimeElapsed extends React.Component {
       <div id={this.props.id}>
         <input
           type="text"
-          name="left_breast"
+          name="right_breast"
           readOnly
           value={
             leftPad(2, units.min) + ":" + leftPad(2, units.sec)

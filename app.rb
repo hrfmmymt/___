@@ -22,7 +22,8 @@ end
 
 post "/new" do
   Works.create({
-    :left_breast => params[:left_breast]
+    :left_breast => params[:left_breast],
+    :right_breast => params[:right_breast]
   })
   redirect "/"
 end
@@ -35,7 +36,8 @@ end
 put "/:id/edit" do
   @works = Works.find(params[:id])
   @works.update({
-    :left_breast => params[:left_breast]
+    :left_breast => params[:left_breast],
+    :right_breast => params[:right_breast]
   })
   redirect "/"
 end
