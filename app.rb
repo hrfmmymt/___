@@ -1,8 +1,17 @@
 # coding:utf-8
 require "sinatra"
 require "sinatra/reloader"
+require "sinatra/flash"
 require "active_record"
 require "json"
+
+require_relative "lib/core_ext/object"
+require_relative "lib/authentication"
+require_relative "lib/user"
+
+TEN_MINUTES   = 60 * 10
+use Rack::Session::Pool, expire_after: TEN_MINUTES # Expire sessions after ten minutes of inactivity
+helpers Authentication
 
 ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"] || "sqlite3:db/development.db")
 
@@ -10,9 +19,10 @@ helpers do
   include Rack::Utils
   alias_method :h, :escape_html
 
+  # Basic Auth
   def protected!
     unless authorized?
-      response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
+      response["WWW-Authenticate"] = %(Basic realm="Restricted Area")
       throw(:halt, [401, "Not authorized\n"])
     end
   end
@@ -20,12 +30,53 @@ helpers do
     @auth ||=  Rack::Auth::Basic::Request.new(request.env)
     @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ["name", "password"]
   end
+
+  # Sinatra Auth
+  def redirect_to_original_request
+    user = session[:user]
+    flash[:notice] = "Welcome back #{user.name}."
+    original_request = session[:original_request]
+    session[:original_request] = nil
+    redirect original_request
+  end
 end
 
 class Works < ActiveRecord::Base
 end
 
+before do
+  headers "Content-Type" => "text/html; charset=utf-8"
+end
+
+get "/signin/?" do
+  erb :signin,
+  locals: {title: "Sign In"}
+end
+
+post "/signin/?" do
+  if user = User.authenticate(params)
+    session[:user] = user
+    redirect_to_original_request
+  else
+    flash[:notice] = "サインインできませんでした。ユーザー名かパスワードが間違っています。"
+    redirect "/signin"
+  end
+end
+
+get "/signout" do
+  session[:user] = nil
+  flash[:notice] = "サインアウトしました。"
+  redirect "/"
+end
+
+get "/protected/?" do
+  authenticate!
+  erb :protected,
+  locals: {title: "Protected Page"}
+end
+
 get "/" do
+  redirect "/signin/?"
   @title = "Dashboard"
   @works = Works.order("id desc").all
   erb :index

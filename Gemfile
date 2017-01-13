@@ -3,9 +3,11 @@ source "https://rubygems.org"
 
 gem "sinatra"
 gem "sinatra-contrib"
+gem "sinatra-flash"
 gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
 gem "rake"
+gem "bcrypt"
 
 group :production do
   gem "pg"
