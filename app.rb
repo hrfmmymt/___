@@ -76,7 +76,7 @@ get "/protected/?" do
 end
 
 get "/" do
-  redirect "/signin/?"
+  redirect "/signin/"
   @title = "Dashboard"
   @works = Works.order("id desc").all
   erb :index
