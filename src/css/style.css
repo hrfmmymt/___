@@ -12,7 +12,8 @@ h2,
 label,
 input,
 ul,
-li {
+li,
+p {
   margin: 0;
   padding: 0;
 }
@@ -110,4 +111,42 @@ h2 {
       margin-bottom: 1em;
     }
   }
+}
+
+.login {
+  margin: 0 auto;
+  & label,
+  & input {
+    display: block;
+  }
+  & input {
+    width: 100%;
+    font-size: 1.6em;
+    border-radius: 2px;
+  }
+  & input[type="text"],
+  & input[type="password"] {
+    background: #fff;
+    border: 1px solid #999;
+    margin-bottom: 1em;
+    padding: .2em .4em;
+    line-height: 1.4;
+  }
+  & input[type="submit"] {
+    border: none;
+    background: #1992f9;
+    padding: .4em;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+.notice {
+  text-align: center;
+  padding: 14px 15px;
+  font-size: 14px;
+  line-height: 16px;
+  color: #fff;
+  background: rgba(0, 0, 0, .3);
+  margin-bottom: 1em;
 }
